@@ -1,27 +1,53 @@
-# Movie
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.4.
+# Install
 
-## Development server
+> Install our stack
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Let's install everything we are going to use in our application. We will use them one after the other.
 
-## Code scaffolding
+## Angular
+Angular is the framework that will structure ou application
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+In a folder run : 
+```
+ng new movie
+cd movie
+```
 
-## Build
+### UI
+For the UI we will use `@angular/material` and `@angular/flex-layout`  : 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```
+ng add @angular/material
+npm install @angular/flex-layout --save
+```
 
-## Running unit tests
+### PWA 
+Let"s make our app a Progressive Web App out of the box with `@angular/cli`:
+```
+ng add @angular/pwa`
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Akita
 
-## Running end-to-end tests
+Akita is a state management system like `redux` that needs less boilerplate and works well with the angular architecture.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+First install the `Akita` library :
+```
+npm install @datorama/akita --save
+```
+We will also install some helper to develop our application : 
+```
+npm install @datorama/akita-cli @datorama/akita-ngdevtools --save-dev
+```
+We use the tag `save-dev` because we don't want these module inside the built version.
+  
 
-## Further help
+## Firebase
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Firebase is a service to build and host serverless application.
+We need to install `firebase` and the Angular Module for Firebase `@angular/fire`: 
+```
+npm install firebase @angular/fire --save
+```
+  
