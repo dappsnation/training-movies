@@ -1,4 +1,3 @@
-
 # Install
 
 > Install our stack
@@ -28,6 +27,8 @@ Let"s make our app a Progressive Web App out of the box with `@angular/cli`:
 ng add @angular/pwa`
 ```
 
+> Detailed tutorial [here](https://angular.io/guide/service-worker-getting-started).
+
 ## Akita
 
 Akita is a state management system like `redux` that needs less boilerplate and works well with the angular architecture.
@@ -50,4 +51,3 @@ We need to install `firebase` and the Angular Module for Firebase `@angular/fire
 ```
 npm install firebase @angular/fire --save
 ```
-  
