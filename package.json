@@ -53,5 +53,10 @@
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "typescript": "~3.1.1"
+  },
+  "akitaCli": {
+    "customFolderName": "+state",
+    "isAngular": true,
+    "basePath": "./src/app"
   }
 }

@@ -1,0 +1,9 @@
+<mat-toolbar>
+  <h1>Movie List</h1>
+</mat-toolbar>
+<mat-action-list>
+  <mat-list-item *ngFor="let movie of movies$ | async">
+    <h2 mat-line>{{ movie.name }}</h2>
+    <p mat-line>{{ movie.release | date }}</p>
+  </mat-list-item>
+</mat-action-list>
