@@ -91,8 +91,21 @@ export interface Movie {
   name: string;
   release: number;
 }
+  
+export  function  createMovie(params:  Partial<Movie>) {
+  return { ...params } as  Movie;
+}
 ```
 We will update it later, but for now let's keep it simple.
+
+#### Bonus DevTools
+One of the best of state management is the DevTools that you can install on your browser to see state history.
+First add the [extension](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en) (Chrome) or [addon](https://addons.mozilla.org/en-US/firefox/addon/remotedev/) (Firefox).
+Then in  `app.module.ts` inside the `imports` array add : 
+```
+environment.production  ? [] :  AkitaNgDevtools.forRoot()
+``` 
+> See Akita [documentation](https://netbasal.gitbook.io/akita/enhancers/devtools) for more details.
 
 ## Components
 
@@ -181,5 +194,61 @@ ng serve
 ```
 We don't see any movies because none have been added to the store.
 
+## Service
+As you can see in Akita [documentation](https://netbasal.gitbook.io/akita/#what-is-akita), the service is the one that updates the state. Open `+state/movie.service.ts` :
+
+```typescript
+import { Injectable } from  '@angular/core';
+import { MovieStore } from  './movie.store';
+import { Movie } from  './movie.model';
+
+@Injectable({ providedIn:  'root' })
+export  class  MovieService {
+
+  constructor(private  store:  MovieStore) {}
+
+  public add(movie:  Movie) {
+    this.store.add(movie);
+  }
+}
+```
+
+Then we need to inject the service into our component and call this method `add`.
+In `list.component.ts` add this method :  
+```typescript
+// Inject the service in the constructor
+constructor(
+  private query: MovieQuery,
+  private service: MovieService
+) {}
+...
+// Create a movie with a name and call add in service
+public add(name: string) {
+  const id = Math.floor(Math.random() *  1000).toString();
+  const movie = createMovie({ name, id });
+  this.service.add(movie);
+}
+```
+Later we will use a more sophisticated id generator.
+And the template `list.template.html`: 
+```html
+...
+<!-- Mat Toolbar above -->
+<form>
+  <mat-form-field>
+    <input #name placeholder="name" />
+  </mat-form-field>
+  <button mat-button type="button" (click)="add(name.value)">Create Movie</button>
+</form>
+<!-- List Below -->
+...
+```
+> Don't forget to add `MatFormFieldModule` and `MatInputModule` in the `UiModule`.
+
+When the button is clicked it gets the value of `#name` (the input) and send it to the `add` method in `list.component.ts`. We specify `type="button"` to prevent default behaviour with the `form` tag that would reload the page.
+
 ## Testing
 Let's test our component.
+
+In `list.component.spect.ts` : 
+- We need to provide the `MovieService` and  

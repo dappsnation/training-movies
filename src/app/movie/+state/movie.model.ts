@@ -8,6 +8,6 @@ export interface Movie {
 
 export function createMovie(params: Partial<Movie>) {
   return {
-
+    ...params
   } as Movie;
 }

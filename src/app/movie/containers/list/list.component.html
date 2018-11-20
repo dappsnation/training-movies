@@ -1,6 +1,14 @@
 <mat-toolbar>
   <h1>Movie List</h1>
 </mat-toolbar>
+<!-- Form -->
+<form>
+  <mat-form-field>
+    <input matInput #name placeholder="name" />
+  </mat-form-field>
+  <button mat-button type="button" (click)="add(name.value)">Create Movie</button>
+</form>
+<!-- List -->
 <mat-action-list>
   <mat-list-item *ngFor="let movie of movies$ | async">
     <h2 mat-line>{{ movie.name }}</h2>
