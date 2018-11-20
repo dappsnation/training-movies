@@ -1,6 +1,6 @@
 # UI
 First we will create a `shared` folder where we will have our UI module. This module will be use to export all our shared UI components, and all the material modules.
-```
+```bash
 ng g module shared/ui
 ```
 
@@ -29,7 +29,7 @@ Here are some common `@angular/material` modules. We will add more later dependi
 # Movie Module
 
 Let's create a module for our movies with routing : 
-```
+```bash
 ng g module movie --routing
 ```
 ### Import UiModule
@@ -62,11 +62,11 @@ Let's create the state. For that we will use the `akita`cli. First, in `package.
 }
 ```
 Then run,  :
-```
+```bash
 npx akita
 ```
 And answer : 
-```
+```bash
 ? Give me a name, please 😀 movie
 ? Which store do you need? 😊 Entity Store
 ? Give me a folder name, please +state
@@ -85,7 +85,7 @@ For a better understanding of the application structure checkout the [doc](https
 
 #### Model 
 Inside `movie.model.ts` set Movie like that : 
-```
+```typescript
 export interface Movie {
   id: ID;
   name: string;
@@ -103,7 +103,7 @@ In this module we will have two folders for our components:
 
 ### Movie List
 The list is a stateful component: 
-```
+```bash
 ng g component movie/containers/list
 ```
 > [Option] : change selector "app-list" to "movie-list"
@@ -126,6 +126,7 @@ The `selectAll` method is a Observable that triggers each time the movie store i
 
 #### Template
 Now we need to subscribe to this Observable and display this list of movies. With the `async`pipe we can subscribe and unsubscribe automatically to an Observable which makes it much easier to work with it.
+
 ```html
 <mat-toolbar>
   <h1>Movie List</h1>
@@ -137,3 +138,48 @@ Now we need to subscribe to this Observable and display this list of movies. Wit
   </mat-list-item>
 </mat-action-list>
 ```
+
+#### Routing
+For now, when we launch our application, we want to see the `movie-list` components. Let's make our AppComponent a router outlet : 
+In `app.component.ts`change the template and style : 
+```typescript
+import { Component } from  '@angular/core';
+@Component({
+  selector: 'app-root',
+  template: '<router-outlet></router-outlet>',
+  styles: [':host { display: block; height: 100% }']
+})
+export class AppComponent {}
+```
+This will enable the AppComponent to host the routes. We don't need `app.component.html` and `app.component.scss` anymore. **Delete them**.
+
+We need to redirect our route toward our `MovieComponent` : 
+
+- In `app-routing.module.ts`: update `routes`
+```typescript
+const  routes:  Routes  = [
+  { path: '', redirectTo: 'movie', pathMatch: 'full' },
+  { path: 'movie', loadChildren: './movie/movie.module#MovieModule' }
+];
+```
+This will redirect the default route to the`/movie` which will lazyload the content of the MovieModule. Right now the lazyloading does not much, but later it's going to be helpful to  load faster the first page.
+
+You can find the complet documentation for Lazy Loading [here](https://angular.io/guide/lazy-loading-ngmodules).
+
+- In `movie-routing.module.ts`: update `routes`
+```typescript
+import { ListComponent } from './containers/list/list.component';
+const  routes:  Routes  = [
+  { path: '', redirectTo: 'list', pathMatch: 'full' },
+  { path: 'list', component: ListComponent }
+];
+```
+Now when the `/movie` route is called it will redirect to `/movie/list` and display the `ListComponent` to the screen.
+Let's check : 
+```
+ng serve
+```
+We don't see any movies because none have been added to the store.
+
+## Testing
+Let's test our component.

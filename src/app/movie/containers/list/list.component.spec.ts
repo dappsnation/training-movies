@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListComponent } from './list.component';
+import { MovieStore, MovieService } from '../../+state';
 
 describe('ListComponent', () => {
   let component: ListComponent;

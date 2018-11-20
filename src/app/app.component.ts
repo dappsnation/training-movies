@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  template: '<router-outlet></router-outlet>',
+  styles: [':host { display: block; height: 100% }']
 })
-export class AppComponent {
-  title = 'movie';
-}
+export class AppComponent {}
